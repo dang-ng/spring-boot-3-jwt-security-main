@@ -5,9 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +23,7 @@ public class JwtService {
             .getBody();
     return claimsResolver.apply(claims);
   }
+
   public String generateToken(
       Map<String, Object> extraClaims,
       UserDetails userDetails
@@ -38,6 +37,7 @@ public class JwtService {
         .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY)), SignatureAlgorithm.HS256)
         .compact();
   }
+
   public boolean isTokenValid(String token, UserDetails userDetails) {
     return (extractClaim(token, Claims::getSubject).equals(userDetails.getUsername())) && !extractClaim(token, Claims::getExpiration).before(new Date());
   }

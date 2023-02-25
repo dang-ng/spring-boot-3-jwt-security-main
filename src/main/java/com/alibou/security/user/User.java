@@ -25,7 +25,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "_user")
 public class User implements UserDetails {
-
   @Id
   @GeneratedValue
   private Integer id;
